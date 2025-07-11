@@ -12,7 +12,10 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
+  const votes = new Array(7).fill(0); // solo sirve como estado inicial , no podemos usarlo dsps pq se reenderiza siempre con el mismo valor
+
   const [selected, setSelected] = useState(0);
+  const [vote, setVote] = useState(votes);
 
   const handleNext = () => {
     const numberRnd = parseInt(Math.random() * anecdotes.length);
@@ -20,9 +23,18 @@ const App = () => {
     setSelected(numberRnd);
   };
 
+  const handleVote = () => {
+    setVote((prev) => {
+      const copyarray = [...prev];
+      copyarray[selected]++;
+      return copyarray;
+    });
+  };
+
   return (
     <>
       <div>{anecdotes[selected]}</div>
+      <button onClick={handleVote}>vote</button>
       <button onClick={handleNext}>next anecdote</button>
     </>
   );
