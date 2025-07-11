@@ -12,7 +12,7 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
-  const votes = new Array(7).fill(0); // solo sirve como estado inicial , no podemos usarlo dsps pq se reenderiza siempre con el mismo valor
+  const votes = new Array(anecdotes.length).fill(0); // solo sirve como estado inicial , no podemos usarlo dsps pq se reenderiza siempre con el mismo valor
 
   const [selected, setSelected] = useState(0);
   const [vote, setVote] = useState(votes);
@@ -31,11 +31,23 @@ const App = () => {
     });
   };
 
+  const mostVote = () => {
+    let valor_mayor = vote[0];
+    vote.forEach((item) => {
+      if (item > valor_mayor) valor_mayor = item;
+    });
+
+    return vote.findIndex((item) => item === valor_mayor);
+  };
+
   return (
     <>
+      <h1>Anecdote of day</h1>
       <div>{anecdotes[selected]}</div>
       <button onClick={handleVote}>vote</button>
       <button onClick={handleNext}>next anecdote</button>
+      <h1>Anecdote most vote</h1>
+      <p>{anecdotes[mostVote()]}</p>
     </>
   );
 };
