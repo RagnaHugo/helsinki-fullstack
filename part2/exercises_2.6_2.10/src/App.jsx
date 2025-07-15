@@ -1,11 +1,18 @@
 import { useState } from "react";
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", phone: "035-1256-1234" },
+  ]);
   const [newName, setNewName] = useState("");
+  const [newPhone, setPhone] = useState("");
+
   const [exist, setExist] = useState(false);
 
-  const addPerson = function (newPerson) {
+  const handleAddPerson = (event) => {
+    event.preventDefault();
+    const newPerson = { name: newName, phone: newPhone };
+
     const hayduplicado = persons.find(
       (element) => element.name === newPerson.name
     );
@@ -19,14 +26,12 @@ const App = () => {
     }
   };
 
-  const handleAddPerson = (event) => {
-    event.preventDefault();
-    const personNew = { name: newName };
-    addPerson(personNew);
-  };
-
   const handleInput = (event) => {
     setNewName(event.target.value);
+  };
+
+  const handlePhone = (event) => {
+    setPhone(event.target.value);
   };
 
   return (
@@ -35,6 +40,10 @@ const App = () => {
       <form>
         <div>
           name: <input onChange={handleInput} />
+        </div>
+        <br></br>
+        <div>
+          phone: <input onChange={handlePhone} />
         </div>
         <div>
           <button type="submit" onClick={handleAddPerson}>
@@ -45,7 +54,9 @@ const App = () => {
       <h2>Numbers</h2>
 
       {persons.map((person) => (
-        <div key={person.name}>{person.name}</div>
+        <div key={person.name}>
+          {person.name} {person.phone}
+        </div>
       ))}
       {!exist ? (
         <p></p>
