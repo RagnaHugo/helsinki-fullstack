@@ -3,10 +3,20 @@ import { useState } from "react";
 const App = () => {
   const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
   const [newName, setNewName] = useState("");
+  const [exist, setExist] = useState(false);
 
   const addPerson = function (newPerson) {
-    const copyPersons = [...persons, newPerson];
-    setPersons(copyPersons);
+    const hayduplicado = persons.find(
+      (element) => element.name === newPerson.name
+    );
+
+    if (!hayduplicado) {
+      const newcopy = [...persons, newPerson];
+      setPersons(newcopy);
+      setExist(false);
+    } else {
+      setExist(true);
+    }
   };
 
   const handleAddPerson = (event) => {
@@ -37,6 +47,11 @@ const App = () => {
       {persons.map((person) => (
         <div key={person.name}>{person.name}</div>
       ))}
+      {!exist ? (
+        <p></p>
+      ) : (
+        <p>{alert(`${newName} is already added to phonebook`)}</p>
+      )}
     </div>
   );
 };
