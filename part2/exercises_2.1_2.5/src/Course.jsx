@@ -3,7 +3,21 @@ const Course = ({ course }) => {
     <>
       <Header course={course} />
       <Content parts={course.parts} />
+      <Total course={course} />
     </>
+  );
+};
+
+const Total = function ({ course }) {
+  return (
+    <strong>
+      total of{" "}
+      {course.parts[0].exercises +
+        course.parts[1].exercises +
+        course.parts[2].exercises +
+        course.parts[3].exercises}{" "}
+      exercises
+    </strong>
   );
 };
 
@@ -25,18 +39,8 @@ const Content = ({ parts }) => {
       <Part part={parts[0].name} exercise={parts[0].exercises} />
       <Part part={parts[1].name} exercise={parts[1].exercises} />
       <Part part={parts[2].name} exercise={parts[2].exercises} />
+      <Part part={parts[3].name} exercise={parts[3].exercises} />
     </>
-  );
-};
-
-const Total = function (props) {
-  return (
-    <p>
-      Number of exercises{" "}
-      {props.parts[0].exercises +
-        props.parts[1].exercises +
-        props.parts[2].exercises}
-    </p>
   );
 };
 
