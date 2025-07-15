@@ -30,10 +30,9 @@ const Part = ({ part, exercise }) => {
 const Content = ({ parts }) => {
   return (
     <>
-      <Part part={parts[0].name} exercise={parts[0].exercises} />
-      <Part part={parts[1].name} exercise={parts[1].exercises} />
-      <Part part={parts[2].name} exercise={parts[2].exercises} />
-      <Part part={parts[3].name} exercise={parts[3].exercises} />
+      {parts.map((value) => (
+        <Part key={value.id} part={value.name} exercise={value.exercises} />
+      ))}
     </>
   );
 };
