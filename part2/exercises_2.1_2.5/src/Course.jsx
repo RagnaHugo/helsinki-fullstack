@@ -9,16 +9,10 @@ const Course = ({ course }) => {
 };
 
 const Total = function ({ course }) {
-  return (
-    <strong>
-      total of{" "}
-      {course.parts[0].exercises +
-        course.parts[1].exercises +
-        course.parts[2].exercises +
-        course.parts[3].exercises}{" "}
-      exercises
-    </strong>
-  );
+  const total = course.parts.reduce((value, element) => {
+    return value + element.exercises;
+  }, 0);
+  return <strong>total of {total} exercises</strong>;
 };
 
 const Header = ({ course }) => <h1>{course.name}</h1>;
