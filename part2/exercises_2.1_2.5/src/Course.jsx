@@ -1,3 +1,4 @@
+// aqui esta el modulo :)
 const Course = ({ course }) => {
   return (
     <>
