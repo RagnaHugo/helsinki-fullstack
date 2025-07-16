@@ -2,12 +2,16 @@ import { useState } from "react";
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: "Arto Hellas", phone: "035-1256-1234" },
+    { name: "Arto Hellas", phone: "040-123456", id: 1 },
+    { name: "Ada Lovelace", phone: "39-44-5323523", id: 2 },
+    { name: "Dan Abramov", phone: "12-43-234345", id: 3 },
+    { name: "Mary Poppendieck", phone: "39-23-6423122", id: 4 },
   ]);
   const [newName, setNewName] = useState("");
   const [newPhone, setPhone] = useState("");
-
   const [exist, setExist] = useState(false);
+  const [textFilter, setFilter] = useState("");
+  const [showArray, setShowArray] = useState([...persons]);
 
   const handleAddPerson = (event) => {
     event.preventDefault();
@@ -20,8 +24,10 @@ const App = () => {
     if (!hayduplicado) {
       const newcopy = [...persons, newPerson];
       setPersons(newcopy);
+      setShowArray([...newcopy]);
       setExist(false);
     } else {
+      alert(`${newName} is already added to phonebook`);
       setExist(true);
     }
   };
@@ -34,9 +40,24 @@ const App = () => {
     setPhone(event.target.value);
   };
 
+  const handleFilter = (event) => {
+    const term = event.target.value?.toLowerCase().trim();
+    setFilter(event.target.value);
+
+    let showArraycopy = persons.filter((element) =>
+      element.name?.toLowerCase().trim().includes(term)
+    );
+    showArraycopy = term === "" ? [...persons] : showArraycopy;
+    setShowArray(showArraycopy);
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        filter show with <input onChange={handleFilter} />
+      </div>
+      <h1>add new</h1>
       <form>
         <div>
           name: <input onChange={handleInput} />
@@ -53,16 +74,11 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
 
-      {persons.map((person) => (
+      {showArray.map((person) => (
         <div key={person.name}>
           {person.name} {person.phone}
         </div>
       ))}
-      {!exist ? (
-        <p></p>
-      ) : (
-        <p>{alert(`${newName} is already added to phonebook`)}</p>
-      )}
     </div>
   );
 };
