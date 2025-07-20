@@ -3,7 +3,7 @@ import { Filter } from "./components/Filter";
 import { PersonForm } from "./components/PersonForm";
 import { Persons } from "./components/Persons";
 import { useEffect } from "react";
-import axios from "axios";
+import { getAllNumbers, addNumber } from "./servicePhoneBook";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -14,9 +14,9 @@ const App = () => {
   const [showArray, setShowArray] = useState([...persons]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/persons").then((Response) => {
-      setPersons(Response.data);
-      setShowArray(Response.data);
+    getAllNumbers().then((Response) => {
+      setPersons(Response);
+      setShowArray(Response);
     });
   }, []);
 
@@ -29,9 +29,7 @@ const App = () => {
     );
 
     if (!hayduplicado) {
-      axios
-        .post("http://localhost:3000/persons", newPerson)
-        .then((response) => console.log(response));
+      addNumber(newPerson);
       const newcopy = [...persons, newPerson];
       setPersons(newcopy);
       setShowArray([...newcopy]);
