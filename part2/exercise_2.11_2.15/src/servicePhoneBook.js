@@ -7,9 +7,11 @@ function getAllNumbers() {
 }
 
 function addNumber(newPerson) {
-  axios
-    .post("http://localhost:3000/persons", newPerson)
-    .then((Response) => console.log(Response));
+  return axios.post("http://localhost:3000/persons", newPerson);
 }
 
-export { getAllNumbers, addNumber };
+function deleteNumber(idPerson) {
+  return axios.delete(`http://localhost:3000/persons/${idPerson}`);
+}
+
+export { getAllNumbers, addNumber, deleteNumber };

@@ -29,11 +29,13 @@ const App = () => {
     );
 
     if (!hayduplicado) {
-      addNumber(newPerson);
-      const newcopy = [...persons, newPerson];
-      setPersons(newcopy);
-      setShowArray([...newcopy]);
-      setExist(false);
+      addNumber(newPerson).then((response) => {
+        console.log(response.data);
+        const newcopy = [...persons, response.data];
+        setPersons(newcopy);
+        setShowArray([...newcopy]);
+        setExist(false);
+      });
     } else {
       alert(`${newName} is already added to phonebook`);
       setExist(true);
@@ -59,6 +61,8 @@ const App = () => {
     setShowArray(showArraycopy);
   };
 
+  const handleDelete = () => {};
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -70,7 +74,11 @@ const App = () => {
         handleInput={handleInput}
       />
       <h2>Numbers</h2>
-      <Persons showArray={showArray} />
+      <Persons
+        showArray={showArray}
+        setPersons={setPersons}
+        setShowArray={setShowArray}
+      />
     </div>
   );
 };
