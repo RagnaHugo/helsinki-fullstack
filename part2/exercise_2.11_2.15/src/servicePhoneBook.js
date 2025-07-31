@@ -14,4 +14,8 @@ function deleteNumber(idPerson) {
   return axios.delete(`http://localhost:3000/persons/${idPerson}`);
 }
 
-export { getAllNumbers, addNumber, deleteNumber };
+function putNumber(idPerson, newData) {
+  return axios.put(`http://localhost:3000/persons/${idPerson}`, newData);
+}
+
+export { getAllNumbers, addNumber, deleteNumber, putNumber };

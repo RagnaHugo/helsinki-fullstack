@@ -3,7 +3,7 @@ import { Filter } from "./components/Filter";
 import { PersonForm } from "./components/PersonForm";
 import { Persons } from "./components/Persons";
 import { useEffect } from "react";
-import { getAllNumbers, addNumber } from "./servicePhoneBook";
+import { getAllNumbers, addNumber, putNumber } from "./servicePhoneBook";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -37,7 +37,25 @@ const App = () => {
         setExist(false);
       });
     } else {
-      alert(`${newName} is already added to phonebook`);
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook , replace the old number with a new one`
+        )
+      ) {
+        putNumber(hayduplicado.id, {
+          ...hayduplicado,
+          phone: newPerson.phone,
+        }).then((response) => {
+          console.log("put ", response.data);
+          const newCopy = persons.filter((element, index) => {
+            return element.name !== response.data.name;
+          });
+
+          setPersons([...newCopy, response.data]);
+          setShowArray([...newCopy, response.data]);
+        });
+      }
+
       setExist(true);
     }
   };
@@ -60,8 +78,6 @@ const App = () => {
     showArraycopy = term === "" ? [...persons] : showArraycopy;
     setShowArray(showArraycopy);
   };
-
-  const handleDelete = () => {};
 
   return (
     <div>
