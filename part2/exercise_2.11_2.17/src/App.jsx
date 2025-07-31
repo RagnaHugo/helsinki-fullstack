@@ -43,7 +43,7 @@ const App = () => {
         setError(false);
         setTimeout(() => {
           setMessage(null);
-        }, 2000);
+        }, 5000);
       });
     } else {
       if (
@@ -54,20 +54,30 @@ const App = () => {
         putNumber(hayduplicado.id, {
           ...hayduplicado,
           phone: newPerson.phone,
-        }).then((response) => {
-          console.log("put ", response.data);
-          const newCopy = persons.filter((element, index) => {
-            return element.name !== response.data.name;
-          });
+        })
+          .then((response) => {
+            console.log("put ", response.data);
+            const newCopy = persons.filter((element, index) => {
+              return element.name !== response.data.name;
+            });
 
-          setPersons([...newCopy, response.data]);
-          setShowArray([...newCopy, response.data]);
-          setMessage(`Updated ${response.data.name}`);
-          setError(false);
-          setTimeout(() => {
-            setMessage(null);
-          }, 2000);
-        });
+            setPersons([...newCopy, response.data]);
+            setShowArray([...newCopy, response.data]);
+            setMessage(`Updated ${response.data.name}`);
+            setError(false);
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000);
+          })
+          .catch((error) => {
+            setMessage(
+              `Information of ${newName} has already been removed from server`
+            );
+            setError(true);
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000);
+          });
       }
 
       setExist(true);
