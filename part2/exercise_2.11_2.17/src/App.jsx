@@ -4,6 +4,8 @@ import { PersonForm } from "./components/PersonForm";
 import { Persons } from "./components/Persons";
 import { useEffect } from "react";
 import { getAllNumbers, addNumber, putNumber } from "./servicePhoneBook";
+import Notification from "./components/Notification";
+import "./index.css";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,6 +14,8 @@ const App = () => {
   const [exist, setExist] = useState(false);
   const [textFilter, setFilter] = useState("");
   const [showArray, setShowArray] = useState([...persons]);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     getAllNumbers().then((Response) => {
@@ -35,6 +39,11 @@ const App = () => {
         setPersons(newcopy);
         setShowArray([...newcopy]);
         setExist(false);
+        setMessage(`Added ${response.data.name}`);
+        setError(false);
+        setTimeout(() => {
+          setMessage(null);
+        }, 2000);
       });
     } else {
       if (
@@ -53,6 +62,11 @@ const App = () => {
 
           setPersons([...newCopy, response.data]);
           setShowArray([...newCopy, response.data]);
+          setMessage(`Updated ${response.data.name}`);
+          setError(false);
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
         });
       }
 
@@ -82,6 +96,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} error={error} />
       <Filter handleFilter={handleFilter} />
       <h1>add new</h1>
       <PersonForm
