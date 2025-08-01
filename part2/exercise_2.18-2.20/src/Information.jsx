@@ -1,3 +1,5 @@
+const api_key = import.meta.env.VITE_SOME_KEY;
+
 const Information = ({ title, restCountries }) => {
   const filterCountrie = restCountries.find(
     (element) => element.name.common.toLowerCase() === title.toLowerCase()

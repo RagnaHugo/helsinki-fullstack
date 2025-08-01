@@ -6,7 +6,7 @@ import axios from "axios";
 import List from "./List";
 
 function App() {
-  const [restCountries, setRestCountries] = useState(null);
+  const [restCountries, setRestCountries] = useState([]);
   const [valueText, setValueText] = useState("");
   const [countriesNames, setCountriesNames] = useState([]);
   const [filter, setFilter] = useState([]);
