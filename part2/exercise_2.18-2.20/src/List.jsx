@@ -31,7 +31,7 @@ const List = ({ valueText, countriesNames, restCountries }) => {
         <p>Too many matches, specify another filter</p>
       ) : filter.length <= 10 && valueText !== "" && filter.length > 1 ? (
         filter.map((item) => (
-          <li>
+          <li key={item}>
             {item}{" "}
             <button
               onClick={() => {
